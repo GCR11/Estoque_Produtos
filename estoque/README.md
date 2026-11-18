@@ -110,3 +110,12 @@ Para testar a RLS, tente inserir um registro com `user_id` diferente de `auth.ui
 3. **Mode do `useForm`:** controla quando validar; neste projeto é usado `mode: 'onBlur'`, mas também existem `onSubmit`, `onChange`, `onTouched` e `all`.
 4. **Envio:** `isSubmitting` indica o período assíncrono de envio e desabilita o botão.
 5. **Erro Supabase:** os erros são convertidos em mensagens portuguesas próprias, sem divulgar mensagens técnicas.
+
+## Respostas da seção 8
+
+1. **Vantagem do React Hook Form:** reduz o código necessário para controlar os campos e evita atualizações de estado a cada digitação. Também centraliza o registro dos campos, os erros e o estado de envio.
+2. **Papel do Zod e do `zodResolver`:** o Zod define e executa as regras de validação em um schema. O `zodResolver` integra esse schema ao React Hook Form e transforma os erros do Zod em erros associados aos campos.
+3. **Por que validar também no servidor:** a validação do navegador pode ser contornada ou adulterada. Constraints e políticas RLS no banco aplicam as regras independentemente de como a requisição foi enviada.
+4. **Erro do formulário versus erro do Supabase:** o erro do formulário ocorre antes do envio, quando os dados não passam pelo schema. O erro do Supabase é devolvido após a requisição, por exemplo, por credenciais inválidas, uma constraint ou uma política RLS.
+5. **Mensagem genérica no login:** evita revelar se um e-mail existe na base, reduzindo a possibilidade de descoberta de contas por terceiros.
+6. **Constraints e `WITH CHECK`:** constraints, como `CHECK`, impedem que dados inválidos sejam gravados no banco. `WITH CHECK` define uma condição que a nova linha deve satisfazer; neste projeto, a política verifica que `user_id` corresponde ao usuário autenticado.
